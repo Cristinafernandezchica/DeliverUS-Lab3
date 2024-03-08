@@ -17,8 +17,15 @@ const create = [
   }).withMessage('Please upload an image with format (jpeg, png).'),
   check('logo').custom((value, { req }) => {
     return checkFileMaxSize(req, 'logo', maxFileSize)
-  }).withMessage('Maximum file size of ' + maxFileSize / 1000000 + 'MB')
+  }).withMessage('Maximum file size of ' + maxFileSize / 1000000 + 'MB'),
   // TODO: Complete validations
+  check('address').exists().isString().isLength({ min: 2, max: 255 }).trim(),
+  check('postalCode').exists().isPostalCode('ES').trim(),
+  check('url').optional({ nullable: true, checkFalsy: true }).isString().trim(),
+  check('email').isEmail().normalizeEmail(),
+  check('phone').isMobilePhone('es-ES'),
+  check('restaurantCategoryId').exists().isNumeric(),
+  check('userId').exists().isNumeric()
 ]
 const update = [
   check('name').exists().isString().isLength({ min: 1, max: 255 }).trim(),
@@ -35,8 +42,15 @@ const update = [
   }).withMessage('Please upload an image with format (jpeg, png).'),
   check('logo').custom((value, { req }) => {
     return checkFileMaxSize(req, 'logo', maxFileSize)
-  }).withMessage('Maximum file size of ' + maxFileSize / 1000000 + 'MB')
+  }).withMessage('Maximum file size of ' + maxFileSize / 1000000 + 'MB'),
   // TODO: Complete validations
+  check('address').exists().isString().isLength({ min: 2, max: 255 }).trim(),
+  check('postalCode').exists().isPostalCode('ES').trim(),
+  check('url').optional({ nullable: true, checkFalsy: true }).isURL().trim(),
+  check('email').isEmail().normalizeEmail(),
+  check('phone').isMobilePhone('es-ES'),
+  check('restaurantCategoryId').exists().isNumeric(),
+  check('userId').exists().isNumeric()
 ]
 
 export { create, update }
